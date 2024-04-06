@@ -1,0 +1,44 @@
+name: Python Test
+
+on:
+  workflow_call:
+    inputs:
+      python_version:
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    if: "${{ !contains(github.event.head_commit.message, 'ci skip') }}"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Poetry/vscode-task-runner
+        run: |
+          pipx install poetry
+          pipx install vscode-task-runner
+
+      - name: Setup Python ${{ inputs.python_version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python_version }}
+          cache: poetry
+
+      - name: Cache Pre-Commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: pre-commit-
+
+      - name: Run Pre-Commit Checks
+        run: vtr pre-commit --color=always --show-diff-on-failure
+
+      - name: Run Tests
+        run: vtr tests
