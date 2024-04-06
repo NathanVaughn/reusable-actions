@@ -21,6 +21,9 @@ jobs:
           pipx install poetry
           pipx install vscode-task-runner
 
+      - name: Build
+        run: vtr build
+
       - name: Get version
         run: echo "PROJECT_VERSION=$(poetry version --short)" >> $GITHUB_ENV
 
@@ -34,9 +37,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.PROJECT_VERSION }}
-
-      - name: Build
-        run: vtr build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
