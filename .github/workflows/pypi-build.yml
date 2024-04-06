@@ -25,18 +25,19 @@ jobs:
         run: vtr build
 
       - name: Get version
-        run: echo "PROJECT_VERSION=$(poetry version --short)" >> $GITHUB_ENV
+        id: project
+        run: echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
 
       - name: Create tag
         uses: mathieudutour/github-tag-action@v6.2
         with:
-          custom_tag: ${{ env.PROJECT_VERSION }}
+          custom_tag: ${{ steps.project.outputs.version }}
           github_token: ${{ github.token }}
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.PROJECT_VERSION }}
+          tag_name: ${{ steps.project.outputs.version }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
