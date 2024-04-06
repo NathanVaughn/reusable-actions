@@ -15,8 +15,11 @@ jobs:
         with:
           ref: main
 
+      - name: Install pre-commit-update
+        run: pipx install pre-commit-update
+
       - name: Run pre-commit-update
-        run: pipx run pre-commit-update
+        run: pre-commit-update
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
