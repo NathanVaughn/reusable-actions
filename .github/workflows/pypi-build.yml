@@ -17,9 +17,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install poetry/vscode-task-runner
-        run: |
-          pipx install poetry
-          pipx install vscode-task-runner
+        uses: NathanVaughn/pipx-install-requirements-action@main
+        with:
+            requirements_file: requirements.txt
 
       - name: Build
         run: vtr build
