@@ -26,6 +26,7 @@ jobs:
 
       - name: Get version
         id: project
+        shell: bash
         run: echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
 
       - name: Create tag
