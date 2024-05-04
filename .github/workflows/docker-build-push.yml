@@ -1,0 +1,88 @@
+name: Docker Build and Push
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        description: 'The platform to build the Docker image for. Common values: linux/amd64, linux/arm64, linux/arm/v7'
+        required: true
+        type: string
+      tags:
+        description: 'The tags to apply to the Docker image. Should be a multi-line string.'
+        required: true
+        type: string
+      buildargs:
+        description: 'The build args to pass to Docker. Should be a multi-line string.'
+        required: false
+        type: string
+      context:
+        description: 'Docker context. Defaults to "."'
+        required: true
+        type: string
+        default: '.'
+    secrets:
+      dockerhub_username:
+        description: 'DockerHub username'
+        required: true
+      dockerhub_password:
+        description: 'DockerHub password'
+        required: true
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+        contents: write
+        packages: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          version: latest
+
+      - name: Dockerhub Login
+        if: contains(inputs.tags, 'docker.io')
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.dockerhub_username }}
+          password: ${{ secrets.dockerhub_password }}
+
+      - name: Github CR Login
+        if: contains(inputs.tags, 'ghcr.io')
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          tags: ${{ inputs.tags }}
+          context: ${{ inputs.context }}
+          platforms: ${{ inputs.platform }}
+          cache-from: type=gha
+          cache-to: type=gha
+          build-args: ${{ inputs.buildargs }}
+          push: true
+
+      - name: Update DockerHub README
+        if: contains(inputs.tags, 'docker.io')
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_USER: ${{ secrets.dockerhub_username }}
+          DOCKER_PASS: ${{ secrets.dockerhub_password }}
+        with:
+          destination_container_repo: nathanvaughn/webtrees
+          provider: dockerhub
+          short_description: ${{ github.event.repository.description }}
