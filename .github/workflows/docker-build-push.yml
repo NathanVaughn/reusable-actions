@@ -20,6 +20,11 @@ on:
         required: true
         type: string
         default: "."
+      dockerfile:
+        description: 'Dockerfile path. Defaults to "Dockerfile"'
+        required: false
+        type: string
+        default: "Dockerfile"
     secrets:
       dockerhub_username:
         description: "DockerHub username"
@@ -27,7 +32,6 @@ on:
       dockerhub_password:
         description: "DockerHub password"
         required: true
-
     outputs:
       digest:
         description: "Digest of the built image"
