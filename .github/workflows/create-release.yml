@@ -1,0 +1,39 @@
+name: Create Release
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: "Release tag"
+        required: true
+        type: string
+      prerelease:
+        description: "Whether or not the release is a prerelease"
+        required: false
+        type: boolean
+        default: false
+      body:
+        description: "The body of the release. May be a multi-line string."
+        required: true
+        type: string
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Create Tag
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ github.token }}
+          custom_tag: ${{ inputs.tag }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: ${{ inputs.prerelease }}
+          tag_name: ${{ inputs.tag }}
+          body: ${{ inputs.body }}
