@@ -80,6 +80,7 @@ jobs:
         with:
           tags: ${{ inputs.tags }}
           context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
           platforms: ${{ inputs.platform }}
           cache-from: type=gha
           cache-to: type=gha
