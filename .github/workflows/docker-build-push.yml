@@ -25,6 +25,10 @@ on:
         required: false
         type: string
         default: "Dockerfile"
+      dockerhub_reponame:
+        description: 'DockerHub repository name'
+        required: false
+        type: string
     secrets:
       dockerhub_username:
         description: "DockerHub username"
@@ -94,7 +98,7 @@ jobs:
           DOCKER_USER: ${{ secrets.dockerhub_username }}
           DOCKER_PASS: ${{ secrets.dockerhub_password }}
         with:
-          destination_container_repo: nathanvaughn/webtrees
+          destination_container_repo: ${{ secrets.dockerhub_username }}/${{ inputs.dockerhub_reponame }}
           provider: dockerhub
           short_description: ${{ github.event.repository.description }}
 
