@@ -28,6 +28,11 @@ on:
         description: "DockerHub password"
         required: true
 
+    outputs:
+      digest:
+        description: "Digest of the built image"
+        value: ${{ jobs.build-push.outputs.digest }}
+
 jobs:
   build-push:
     runs-on: ubuntu-latest
@@ -66,6 +71,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push
+        id: build-push
         uses: docker/build-push-action@v5
         with:
           tags: ${{ inputs.tags }}
@@ -86,3 +92,6 @@ jobs:
           destination_container_repo: nathanvaughn/webtrees
           provider: dockerhub
           short_description: ${{ github.event.repository.description }}
+
+    outputs:
+      digest: ${{ steps.build-push.outputs.digest }}
