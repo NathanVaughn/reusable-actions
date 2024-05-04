@@ -21,7 +21,7 @@ on:
         type: string
         default: "."
       dockerfile:
-        description: 'Dockerfile path. Defaults to "Dockerfile"'
+        description: 'Full Dockerfile path. Defaults to "Dockerfile"'
         required: false
         type: string
         default: "Dockerfile"
