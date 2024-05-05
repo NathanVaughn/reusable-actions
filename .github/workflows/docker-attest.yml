@@ -65,4 +65,4 @@ jobs:
         with:
           subject-name: ${{ inputs.name }}
           subject-digest: ${{ steps.read.outputs.digest }}
-          push-to-registry: true
+          push-to-registry: false
