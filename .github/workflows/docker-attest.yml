@@ -11,13 +11,13 @@ on:
         description: "Attestation ID. If provided, an artifact will be produced with the digest of the image, named with this ID."
         required: true
         type: string
-    secrets:
-      dockerhub_username:
-        description: "DockerHub username"
-        required: false
-      dockerhub_password:
-        description: "DockerHub password"
-        required: false
+    # secrets:
+    #   dockerhub_username:
+    #     description: "DockerHub username"
+    #     required: false
+    #   dockerhub_password:
+    #     description: "DockerHub password"
+    #     required: false
 
 jobs:
   attest:
@@ -33,20 +33,20 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: DockerHub Login
-        if: contains(inputs.name, 'docker.io')
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.dockerhub_username }}
-          password: ${{ secrets.dockerhub_password }}
+      # - name: DockerHub Login
+      #   if: contains(inputs.name, 'docker.io')
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.dockerhub_username }}
+      #     password: ${{ secrets.dockerhub_password }}
 
-      - name: Github CR Login
-        if: contains(inputs.name, 'ghcr.io')
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Github CR Login
+      #   if: contains(inputs.name, 'ghcr.io')
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download Image Digest
         uses: actions/download-artifact@v4
