@@ -6,6 +6,9 @@ on:
       python_version:
         required: true
         type: string
+      pytest:
+        type: boolean
+        default: true
 
 jobs:
   test:
@@ -41,4 +44,5 @@ jobs:
         run: vtr pre-commit --color=always --show-diff-on-failure
 
       - name: Run Tests
+        if: inputs.pytest
         run: vtr tests
