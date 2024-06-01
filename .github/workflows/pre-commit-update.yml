@@ -18,11 +18,16 @@ jobs:
       - name: Run pre-commit-update
         run: pipx run pre-commit-update
 
+      - name: Create change hash
+        id: hasher
+        shell: bash
+        run: echo "hash=$(sha256sum .pre-commit-config.yaml | head -c 8)" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ github.token }}
-          branch: update/pre-commit-update
+          branch: update/pre-commit-update-${{ steps.hasher.outputs.hash }}
           title: Update Pre-Commit hooks
           commit-message: Update Pre-Commit hooks
           body: |
@@ -31,7 +36,7 @@ jobs:
 
             ```bash
             git fetch
-            git checkout update/pre-commit-update
+            git checkout update/pre-commit-update-${{ steps.hasher.outputs.hash }}
             git pull
             vtr pre-commit
             ```
