@@ -43,4 +43,4 @@ jobs:
 
       - name: Run Tests
         if: inputs.pytest
-        run: vtr tests
+        run: vtr tests --color=yes
