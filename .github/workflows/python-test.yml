@@ -43,4 +43,10 @@ jobs:
 
       - name: Run Tests
         if: inputs.pytest
-        run: vtr tests --color=yes
+        run: vtr tests --color=yes --junit-xml=test_report.xml
+
+      - name: Upload Test Summary
+        if: inputs.pytest && always()
+        uses: test-summary/action@v2.4
+        with:
+          paths: test_report.xml
