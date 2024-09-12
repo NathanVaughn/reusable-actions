@@ -25,10 +25,11 @@ jobs:
         run: echo "hash=$(sha256sum .pre-commit-config.yaml | head -c 8)" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ github.token }}
           branch: update/pre-commit-update-${{ steps.hasher.outputs.hash }}
+          sign-commits: true
           title: Update Pre-Commit hooks
           commit-message: Update Pre-Commit hooks
           body: |
