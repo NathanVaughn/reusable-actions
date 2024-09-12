@@ -29,6 +29,7 @@ jobs:
         with:
           token: ${{ github.token }}
           branch: update/pre-commit-update-${{ steps.hasher.outputs.hash }}
+          sign-commits: true
           title: Update Pre-Commit hooks
           commit-message: Update Pre-Commit hooks
           body: |
