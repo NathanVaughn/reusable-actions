@@ -1,4 +1,14 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["github>nathanvaughn/renovate-config"]
+    "extends": ["github>nathanvaughn/renovate-config"],
+    "customManagers": [
+        {
+          "customType": "regex",
+          "fileMatch": [".*?\\.ya?ml$"],
+          "matchStrings": ["# renovate:uv\\s+\\s+version:\\s?\"?(?<currentValue>.+?)\"?\\s"],
+          "depNameTemplate": "uv",
+          "packageNameTemplate": "astral-sh/uv",
+          "datasourceTemplate": "github-releases"
+        }
+      ]
 }

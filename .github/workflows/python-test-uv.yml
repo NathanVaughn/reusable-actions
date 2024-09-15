@@ -22,18 +22,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Install Poetry/vscode-task-runner
-        uses: threeal/pipx-install-action@v1.0.0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v2
         with:
-          packages: |
-            poetry
-            vscode-task-runner
+          enable-cache: true
+          # renovate:uv
+          version: 0.4.4
 
-      - name: Setup Python ${{ inputs.python_version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ inputs.python_version }}
-          cache: poetry
+      - name: Install Python ${{ inputs.python_version }}
+        run: uv python install ${{ inputs.python_version }}
+
+      - name: Install vscode-task-runner
+        run: uv tool install vscode-task-runner
 
       - name: Cache Pre-Commit
         uses: NathanVaughn/actions-pre-commit-cache@main
