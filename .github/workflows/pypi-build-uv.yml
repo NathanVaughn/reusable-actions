@@ -23,7 +23,7 @@ jobs:
         with:
           enable-cache: true
           # renovate:uv
-          version: 0.4.4
+          version: 0.4.10
 
       # 3.11+ is needed for tomllib
       - name: Install latest Python
