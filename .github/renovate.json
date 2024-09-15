@@ -4,6 +4,7 @@
     "customManagers": [
         {
           "customType": "regex",
+          "description": "Update uv version Actions",
           "fileMatch": [".*?\\.ya?ml$"],
           "matchStrings": ["# renovate:uv\\s+\\s+version:\\s?\"?(?<currentValue>.+?)\"?\\s"],
           "depNameTemplate": "uv",
