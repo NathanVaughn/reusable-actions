@@ -9,7 +9,7 @@ on:
         type: string
       tags:
         description: "The tags to apply to the Docker image. Should be a multi-line string or comma-seperated."
-        required: true
+        required: false
         type: string
       buildargs:
         description: "The build args to pass to Docker. Should be a multi-line string."
