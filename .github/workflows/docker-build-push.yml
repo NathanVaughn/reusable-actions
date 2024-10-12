@@ -29,13 +29,18 @@ on:
         description: 'Attestation ID. If provided, an artifact will be produced with the digest of the image, named with this ID.'
         required: false
         type: string
+      push:
+        description: 'Whether to push the image'
+        required: true
+        type: boolean
+        default: true
     secrets:
       dockerhub_username:
         description: "DockerHub username"
-        required: true
+        required: false
       dockerhub_password:
         description: "DockerHub password"
-        required: true
+        required: false
 
 jobs:
   build-push:
