@@ -7,6 +7,7 @@ on:
         description: "The platform to build the Docker image for. Common values: linux/amd64, linux/arm64, linux/arm/v7"
         required: true
         type: string
+        default: 'linux/amd64'
       tags:
         description: "The tags to apply to the Docker image. Should be a multi-line string or comma-seperated."
         required: false
