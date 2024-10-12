@@ -91,7 +91,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha
           build-args: ${{ inputs.buildargs }}
-          push: true
+          push: ${{ inputs.push }}
           provenance: mode=max
           sbom: true
 
