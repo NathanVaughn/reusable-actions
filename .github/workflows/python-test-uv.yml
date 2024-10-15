@@ -36,7 +36,7 @@ jobs:
           python-version: "${{ inputs.python_version }}"
 
       - name: Install Python Version from Project
-        if: !inputs.python_version
+        if: inputs.python_version == null
         uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
