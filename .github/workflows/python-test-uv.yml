@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       python_version:
-        required: true
+        required: false
         type: string
       pytest:
         type: boolean
@@ -27,12 +27,19 @@ jobs:
         with:
           enable-cache: true
           # renovate:uv
-          version: "0.4.17"
+          version: "0.4.20"
 
       - name: Install Python ${{ inputs.python_version }}
+        if: inputs.python_version
         uses: actions/setup-python@v5
         with:
           python-version: "${{ inputs.python_version }}"
+
+      - name: Install Python Version from Project
+        if: inputs.python_version == null
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
 
       - name: Install vscode-task-runner
         run: uv tool install vscode-task-runner

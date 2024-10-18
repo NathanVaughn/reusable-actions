@@ -5,11 +5,12 @@ on:
     inputs:
       platform:
         description: "The platform to build the Docker image for. Common values: linux/amd64, linux/arm64, linux/arm/v7"
-        required: true
+        required: false
         type: string
+        default: 'linux/amd64'
       tags:
         description: "The tags to apply to the Docker image. Should be a multi-line string or comma-seperated."
-        required: true
+        required: false
         type: string
       buildargs:
         description: "The build args to pass to Docker. Should be a multi-line string."
@@ -17,7 +18,7 @@ on:
         type: string
       context:
         description: 'Docker context. Defaults to "."'
-        required: true
+        required: false
         type: string
         default: "."
       dockerfile:
@@ -29,13 +30,18 @@ on:
         description: 'Attestation ID. If provided, an artifact will be produced with the digest of the image, named with this ID.'
         required: false
         type: string
+      push:
+        description: 'Whether to push the image'
+        required: false
+        type: boolean
+        default: true
     secrets:
       dockerhub_username:
         description: "DockerHub username"
-        required: true
+        required: false
       dockerhub_password:
         description: "DockerHub password"
-        required: true
+        required: false
 
 jobs:
   build-push:
@@ -85,7 +91,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha
           build-args: ${{ inputs.buildargs }}
-          push: true
+          push: ${{ inputs.push }}
           provenance: mode=max
           sbom: true
 
