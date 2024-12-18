@@ -27,7 +27,7 @@ jobs:
         with:
           enable-cache: true
           # renovate:uv
-          version: "0.5.9"
+          version: "0.5.10"
 
       - name: Install Python ${{ inputs.python_version }}
         if: inputs.python_version
