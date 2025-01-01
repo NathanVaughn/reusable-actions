@@ -61,7 +61,7 @@ jobs:
 
       - name: Create Attestation
         id: attest
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-name: ${{ inputs.name }}
           subject-digest: ${{ steps.read.outputs.digest }}
