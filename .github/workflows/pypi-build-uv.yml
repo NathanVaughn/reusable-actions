@@ -23,7 +23,7 @@ jobs:
         # defaults to cache on and latest version
 
       # 3.11+ is needed for tomllib
-      - name: Install Python 3.12
+      - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
