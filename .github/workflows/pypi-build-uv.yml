@@ -22,12 +22,6 @@ jobs:
         uses: astral-sh/setup-uv@v5
         # defaults to cache on and latest version
 
-      # 3.11+ is needed for tomllib
-      - name: Install Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-
       - name: Install vscode-task-runner
         run: uv tool install vscode-task-runner
 
@@ -37,7 +31,7 @@ jobs:
       - name: Get version
         id: project
         shell: bash
-        run: echo "version=$(python -c 'import tomllib;fp=open("pyproject.toml","rb");print(tomllib.load(fp)["project"]["version"]);fp.close()')" >> $GITHUB_OUTPUT
+        run: echo "version=$(uv version --short)" >> $GITHUB_OUTPUT
 
       - name: Create tag
         uses: mathieudutour/github-tag-action@v6.2
