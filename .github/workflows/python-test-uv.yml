@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       - name: Install Python ${{ inputs.python_version }}
         if: inputs.python_version
         uses: actions/setup-python@v5
@@ -43,6 +43,9 @@ jobs:
 
       - name: Cache Pre-Commit
         uses: NathanVaughn/actions-pre-commit-cache@main
+
+      - name: Install Dependencies
+        run: uv sync --all-extras
 
       - name: Run Pre-Commit Hooks
         run: vtr pre-commit --color=always --show-diff-on-failure
