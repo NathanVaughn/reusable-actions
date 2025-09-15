@@ -20,7 +20,9 @@ jobs:
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v6
-        # defaults to cache on and latest version
+        with:
+          enable-cache: true
+          prune-cache: false
 
       - name: Install vscode-task-runner
         run: uv tool install vscode-task-runner
