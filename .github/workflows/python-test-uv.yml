@@ -4,9 +4,11 @@ on:
   workflow_call:
     inputs:
       python_version:
+        description: Python version to use. If ommitted, uses version located in .python-version file
         required: false
         type: string
       pytest:
+        description: If pytest should be run
         type: boolean
         default: true
 
