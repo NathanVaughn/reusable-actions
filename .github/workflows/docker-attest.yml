@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # - name: DockerHub Login
       #   if: contains(inputs.name, 'docker.io')
@@ -49,7 +49,7 @@ jobs:
       #     password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download Image Digest
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.attest_id }}
           path: ${{ runner.temp }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Create Attestation
         id: attest
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ inputs.name }}
           subject-digest: ${{ steps.read.outputs.digest }}
