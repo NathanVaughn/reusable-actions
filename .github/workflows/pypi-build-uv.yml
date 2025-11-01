@@ -23,6 +23,7 @@ jobs:
         with:
           prune-cache: false
           cache-python: true
+          ignore-nothing-to-cache: true
 
       - name: Install vscode-task-runner
         run: uv tool install vscode-task-runner

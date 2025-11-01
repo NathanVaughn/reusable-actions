@@ -41,6 +41,7 @@ jobs:
         with:
           prune-cache: false
           cache-python: true
+          ignore-nothing-to-cache: true
           cache-suffix: "extras"
 
       - name: Install vscode-task-runner
