@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Create Tag
-        uses: nickkostov/github-tag-action@v1.3.0
+        uses: nickkostov/github-tag-action@v1.5.1
         with:
           github_token: ${{ github.token }}
           custom_tag: ${{ inputs.tag }}
