@@ -18,15 +18,5 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
 
-      - name: Setup uv
-        uses: astral-sh/setup-uv@v8.1.0
-        with:
-          prune-cache: false
-          cache-python: true
-          ignore-nothing-to-cache: true
-
-      - name: Cache Pre-Commit
-        uses: NathanVaughn/actions-pre-commit-cache@main
-
-      - name: Run Pre-Commit Hooks
-        run: uvx prek run --all-files --color=always --show-diff-on-failure
+      - name: Run pre-commit
+        uses: j178/prek-action@v2
